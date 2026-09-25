@@ -8,6 +8,9 @@ An interactive timeline of the Bible built with Vue 3 (3.5), Vite 8 and TypeScri
 - The event nearest the middle of the screen is the **focused** event: its dot, date and text are highlighted, and the header shows its date, its BC/AD year, and where it falls in the 364-day year.
 - Navigate by scrolling, dragging, the mouse wheel, the arrow keys, Page Up and Page Down, Home and End, the Earlier and Later buttons, clicking a card, or clicking the ruler at the bottom.
 
+## Live Version
+[oleg.love/biblical-timeline/](https://oleg.love/biblical-timeline/)
+
 ## Run it
 
 Requires Node 22.18+ or 24.12+.
