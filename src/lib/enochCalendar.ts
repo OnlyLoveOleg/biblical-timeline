@@ -120,3 +120,36 @@ const numberFormat = new Intl.NumberFormat('en')
 export function formatCount(value: number): string {
   return numberFormat.format(value)
 }
+
+/**
+ * James Ussher's traditional epoch: Anno Mundi 1 (the year of creation) is 4004 BC.
+ * This is the same chronology used to date the events in public/events.json, so the two
+ * stay consistent. Other chronologies place creation thousands of years earlier or later.
+ */
+export const CREATION_BC_YEAR = 4004
+
+export interface HistoricalYear {
+  era: 'BC' | 'AD'
+  /** Always 1 or more. */
+  year: number
+}
+
+/**
+ * Convert an Anno Mundi year (EnochDate.year, 1-based) to a BC/AD year on Ussher's chronology.
+ * There is no year zero: Anno Mundi CREATION_BC_YEAR is 1 BC and the following year is AD 1.
+ */
+export function toHistoricalYear(annoMundiYear: number): HistoricalYear {
+  if (!Number.isInteger(annoMundiYear) || annoMundiYear < 1) {
+    throw new RangeError(`Year must be an integer of 1 or more, got ${annoMundiYear}`)
+  }
+  if (annoMundiYear <= CREATION_BC_YEAR) {
+    return { era: 'BC', year: CREATION_BC_YEAR - annoMundiYear + 1 }
+  }
+  return { era: 'AD', year: annoMundiYear - CREATION_BC_YEAR }
+}
+
+/** "2348 BC" or "AD 33" */
+export function formatHistoricalYear(annoMundiYear: number): string {
+  const { era, year } = toHistoricalYear(annoMundiYear)
+  return era === 'BC' ? `${formatCount(year)} BC` : `AD ${formatCount(year)}`
+}

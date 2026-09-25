@@ -1,12 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import {
+  CREATION_BC_YEAR,
   DAYS_PER_SEASON,
   DAYS_PER_YEAR,
   formatDate,
+  formatHistoricalYear,
   formatSpan,
   fromDay,
   monthLength,
   toDay,
+  toHistoricalYear,
 } from '@/lib/enochCalendar'
 
 describe('Enochian calendar cycles', () => {
@@ -61,6 +64,28 @@ describe('Enochian calendar cycles', () => {
     expect(() => toDay(1, 3, 32)).toThrow(RangeError)
     expect(() => toDay(1, 13, 1)).toThrow(RangeError)
     expect(() => toDay(0, 1, 1)).toThrow(RangeError)
+  })
+})
+
+describe('BC/AD conversion (Ussher epoch)', () => {
+  it('has no year zero: the creation year is 1 BC and the next year is AD 1', () => {
+    expect(toHistoricalYear(CREATION_BC_YEAR)).toEqual({ era: 'BC', year: 1 })
+    expect(toHistoricalYear(CREATION_BC_YEAR + 1)).toEqual({ era: 'AD', year: 1 })
+  })
+
+  it('puts Anno Mundi year 1 (creation) at 4004 BC', () => {
+    expect(toHistoricalYear(1)).toEqual({ era: 'BC', year: CREATION_BC_YEAR })
+    expect(formatHistoricalYear(1)).toBe('4,004 BC')
+  })
+
+  it('matches the dates already used for events.json', () => {
+    expect(formatHistoricalYear(1657)).toBe('2,348 BC') // the Flood
+    expect(formatHistoricalYear(4001)).toBe('4 BC') // Jesus is born, per Ussher
+    expect(toHistoricalYear(4037)).toEqual({ era: 'AD', year: 33 }) // the crucifixion, per this app
+  })
+
+  it('rejects a year below 1', () => {
+    expect(() => toHistoricalYear(0)).toThrow(RangeError)
   })
 })
 

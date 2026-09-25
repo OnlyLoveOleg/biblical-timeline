@@ -58,6 +58,10 @@ function onClick(e: MouseEvent) {
         creation. Month and day are used only where the text gives them, such as the Flood, Passover and the Temple.
         Other events use month 1, day 1, so read those dates as “sometime this year”.
       </p>
+      <p>
+        The BC/AD year shown alongside the header comes from the same chronology: creation falls in 4004 BC, with no
+        year zero, so the year right after 1 BC is AD 1. It moves with whichever event is focused.
+      </p>
 
       <h3>What to keep in mind</h3>
       <p>

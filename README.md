@@ -5,7 +5,7 @@ An interactive timeline of the Bible built with Vue 3 (3.5), Vite 8 and TypeScri
 - Events load from a local JSON file, `public/events.json`.
 - White background.
 - The timeline scrolls **horizontally on screens 768px wide and up** and **vertically below that**.
-- The event nearest the middle of the screen is the **focused** event: its dot, date and text are highlighted, and the header shows its date and where it falls in the 364-day year.
+- The event nearest the middle of the screen is the **focused** event: its dot, date and text are highlighted, and the header shows its date, its BC/AD year, and where it falls in the 364-day year.
 - Navigate by scrolling, dragging, the mouse wheel, the arrow keys, Page Up and Page Down, Home and End, the Earlier and Later buttons, clicking a card, or clicking the ruler at the bottom.
 
 ## Run it
@@ -60,6 +60,7 @@ The years follow the Masoretic genealogies and James Ussher’s *Annals of the W
 
 - **Month and day** are used only where the text gives them. Elsewhere the date is month 1, day 1 (a placeholder), which means “this year” and nothing more. The table below marks which is which.
 - **Genesis 7:24 and 8:3–4 count 150 days** from the start of the Flood to the ark resting. On this calendar the same span is **152 days**, because the third and sixth months have 31 days. Only 30-day months give exactly 150. The event summary says so.
+- **The BC/AD year in the header is derived, not stored.** It's computed from the Anno Mundi year using Ussher's 4004 BC epoch (`toHistoricalYear` in `src/lib/enochCalendar.ts`), with no year zero: 4004 BC is followed directly by AD 1. It moves with whichever event is focused, and it inherits every uncertainty already listed here for the years themselves.
 - **A 364-day year is about 1.24 days shorter than the solar year.** Years here drift against the real seasons and cannot be converted to modern dates. Ancient sources that use this calendar do not agree on how to correct it.
 - **Other chronologies place the same events differently.** The Septuagint and Samaritan Pentateuch add centuries before Abraham, the Book of Jubilees uses its own count, and secular scholarship differs by far more. To switch schemes, change the `date` values.
 - **Weekdays are not shown.** In the Enochic and Jubilees tradition the year begins on the fourth day of the week, which does not match counting day 1 as the first day of creation.

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import YearDial from '@/components/YearDial.vue'
-import { formatCount } from '@/lib/enochCalendar'
+import { formatCount, formatHistoricalYear } from '@/lib/enochCalendar'
 import type { TimelineEvent } from '@/types'
 
 defineProps<{ event: TimelineEvent }>()
@@ -12,7 +12,10 @@ defineProps<{ event: TimelineEvent }>()
       <YearDial :cal="event.cal" />
     </div>
     <div class="text">
-      <p class="year">Year {{ event.cal.year }}</p>
+      <p class="year">
+        Year {{ event.cal.year }}
+        <span class="era">({{ formatHistoricalYear(event.cal.year) }})</span>
+      </p>
       <p class="detail">Month {{ event.cal.month }}, day {{ event.cal.dayOfMonth }}</p>
       <p class="count">Day {{ formatCount(event.cal.day) }} from creation</p>
     </div>
@@ -40,6 +43,12 @@ defineProps<{ event: TimelineEvent }>()
   letter-spacing: -0.01em;
   color: var(--accent);
   font-variant-numeric: lining-nums tabular-nums;
+}
+.era {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
 }
 .detail {
   margin-top: 0.15rem;
